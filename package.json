@@ -1,0 +1,23 @@
+{
+  "name": "canvas",
+  "version": "0.1.0",
+  "description": "A simple canvas app.",
+  "private": true,
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "node ./dev-server.js",
+    "deploy": "now ./dist --prod"
+  },
+  "repository": "huang2002/canvas",
+  "author": "3h",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "herver": "^0.4.0",
+    "rollup": "^2.2.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-terser": "^5.3.0",
+    "terser": "^4.6.7"
+  }
+}

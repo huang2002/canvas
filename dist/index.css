@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    font-size: 1em;
+    text-shadow: 0 1px 0 #002;
+    line-height: 2em;
+    box-sizing: border-box;
+}
+
+body {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: #DDD;
+    font-size: 16px;
+    overflow: hidden;
+}
+
+#canvas {
+    width: 100%;
+    height: 100%;
+}
+
+#toolbar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    height: 1.6em;
+    padding: 0 .6em;
+    white-space: nowrap;
+    background-color: rgba(0, 0, 50, .6);
+    border: solid 1px #223;
+    border-radius: 5px 5px 0 0;
+    border-bottom: none;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .5);
+    transform: translateX(-50%);
+    overflow-y: visible;
+    backdrop-filter: blur(5px);
+    user-select: none;
+}
+
+.toolbar-button {
+    position: relative;
+    top: -1em;
+    margin: 0 .3em;
+    padding: 0 1em;
+    text-decoration: none;
+    background-color: #223;
+    border: solid 1px #112;
+    border-radius: 3px;
+    outline: none;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .5);
+    cursor: pointer;
+    transition: border-radius .1s ease;
+}
+
+.toolbar-button:focus {
+    border-color: #000;
+    border-radius: 6px;
+}
+
+.hotkey::first-letter {
+    text-decoration: underline #CCC;
+}
+
+.controller-button {
+    display: inline-block;
+    color: #CCC;
+}
+
+.controller-button:target {
+    border-color: #000;
+    color: #FFF;
+}
+
+#more-layer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, .5);
+    backdrop-filter: blur(5px);
+    z-index: 666;
+}
+
+#more-window {
+    display: inline-block;
+    width: 20em;
+    margin-top: 1em;
+    padding: 1.6em 0 1.8em;
+    background-color: rgba(0, 0, 16, .7);
+    border: solid 1px #112;
+    border-radius: 5px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .5);
+}
+
+#settings-table {
+    margin: 0 auto;
+    width: 90%;
+    text-align: left;
+}
+
+.settings-field {
+    white-space: nowrap;
+}
+
+.settings-label {
+    display: inline-block;
+    margin-right: 1em;
+    width: 50%;
+    text-align: right;
+}
+
+.settings-input-color {
+    background-color: #CCC;
+    border: solid 1px #112;
+    border-radius: 3px;
+    width: 3em;
+}
+
+.settings-input-range {
+    width: 6em;
+}
+
+.more-button {
+    margin: 1em .5em 0;
+    padding: 0 1em;
+    background-color: transparent;
+    border: solid 1px #999;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+}
+
+.more-button:focus {
+    border-color: #DDD;
+}
