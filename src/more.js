@@ -128,6 +128,14 @@ export const moreLayer = h('div', {
         }),
         h('br'),
         MoreButton('Back', toggleMore),
+        h('br'),
+        h('a', {
+            id: 'repo-link',
+            href: 'https://github.com/huang2002/canvas',
+            target: '__blank',
+        }, [
+            'Git Repository'
+        ]),
     ]),
 ]);
 
