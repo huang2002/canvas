@@ -5,8 +5,7 @@
   "private": true,
   "scripts": {
     "build": "rollup -c",
-    "dev": "node ./dev-server.js",
-    "deploy": "now ./dist --prod"
+    "dev": "node ./dev-server.js"
   },
   "repository": "huang2002/canvas",
   "author": "3h",
