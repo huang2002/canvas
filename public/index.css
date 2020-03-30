@@ -92,7 +92,7 @@ body {
 #more-window {
     display: inline-block;
     width: 20em;
-    margin-top: 1em;
+    margin: 1em 0;
     padding: 1.5em 0 1em;
     background-color: rgba(0, 0, 16, .7);
     border: solid 1px #112;
