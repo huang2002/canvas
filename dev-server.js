@@ -7,7 +7,7 @@ const app = new App();
 
 app.use(createStaticHandler(join(__dirname, 'src')))
     .use(createStaticHandler(join(__dirname, 'test')))
-    .use(createStaticHandler(join(__dirname, 'dist')));
+    .use(createStaticHandler(join(__dirname, 'public')));
 
 app.listen(PORT);
 
