@@ -94,7 +94,7 @@ body {
     width: 20em;
     margin: 1em 0;
     padding: 1.5em 0 1em;
-    background-color: rgba(0, 0, 16, .7);
+    background-color: rgba(0, 0, 16, .6);
     border: solid 1px #112;
     border-radius: 5px;
     box-shadow: 0 5px 10px rgba(0, 0, 0, .5);
@@ -121,7 +121,10 @@ body {
     background-color: #CCC;
     border: solid 1px #112;
     border-radius: 3px;
-    width: 3em;
+    width: 5em;
+    color: #111;
+    font-size: .8em;
+    text-shadow: none;
 }
 
 .settings-input-range {
