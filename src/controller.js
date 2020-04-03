@@ -8,15 +8,13 @@ export const states = {
     rubberWidth: 16,
 };
 
-let isPressing = false;
-
 /**
- * @type {(import('./canvas').Point)[]}
+ * @type {Map<number, (import('./canvas').Point)[]>}
  */
-let currentPath;
+const pathMap = new Map();
 
 /**
- * @typedef {(x: number, y: number) => void} ControllerCallback
+ * @typedef {(id: number, x: number, y: number) => void} ControllerCallback
  */
 
 /**
@@ -32,68 +30,74 @@ let currentPath;
 const controllers = {
 
     pen: {
-        start(x, y) {
+        start(id, x, y) {
             clearTrash();
-            currentPath = [{ x, y }];
+            const path = [{ x, y }];
+            pathMap.set(id, path);
             const line = {
                 color: states.foreground,
                 width: states.penWidth,
-                path: currentPath,
+                path,
             };
             history.push(line);
             applyLineStyle(line);
         },
-        move(x, y) {
+        move(id, x, y) {
             /**
              * HACK: sometimes move() just triggers before start(),
              * so this check is here to prevent uninitialized variable
              * from being used, which causes errors.
              */
-            if (!currentPath) {
+            const path = pathMap.get(id);
+            if (!path) {
                 return;
             }
-            const lastPoint = currentPath[currentPath.length - 1];
-            currentPath.push({ x, y });
+            const lastPoint = path[path.length - 1];
+            path.push({ x, y });
             context.beginPath();
             context.moveTo(lastPoint.x, lastPoint.y);
             context.lineTo(x, y);
             context.stroke();
         },
-        stop(x, y) {
-            this.move(x, y);
+        stop(id, x, y) {
+            this.move(id, x, y);
+            pathMap.delete(id);
         },
     },
 
     wiper: {
-        start(x, y) {
+        start(id, x, y) {
             clearTrash();
-            currentPath = [{ x, y }];
+            const path = [{ x, y }];
+            pathMap.set(id, path);
             const line = {
                 color: null,
                 width: states.rubberWidth,
-                path: currentPath,
+                path,
             };
             history.push(line);
             applyLineStyle(line);
         },
-        move(x, y) {
+        move(id, x, y) {
             /**
              * HACK: sometimes move() just triggers before start(),
              * so this check is here to prevent uninitialized variable
              * from being used, which causes errors.
              */
-            if (!currentPath) {
+            const path = pathMap.get(id);
+            if (!path) {
                 return;
             }
-            const lastPoint = currentPath[currentPath.length - 1];
-            currentPath.push({ x, y });
+            const lastPoint = path[path.length - 1];
+            path.push({ x, y });
             context.beginPath();
             context.moveTo(lastPoint.x, lastPoint.y);
             context.lineTo(x, y);
             context.stroke();
         },
-        stop(x, y) {
-            this.move(x, y);
+        stop(id, x, y) {
+            this.move(id, x, y);
+            pathMap.delete(id);
         },
     },
 
@@ -112,6 +116,8 @@ export const setController = key => {
 const isTouchScreen = navigator.maxTouchPoints
     || /ios|iphone|ipad/i.test(navigator.userAgent);
 
+let isPressing = false;
+
 if (isTouchScreen) {
     window.addEventListener('touchstart', event => {
         if (event.target !== canvas) {
@@ -119,18 +125,22 @@ if (isTouchScreen) {
         }
         event.preventDefault();
         isPressing = true;
+        const touch = event.changedTouches[0];
         controller.start(
-            event.changedTouches[0].clientX,
-            event.changedTouches[0].clientY
+            touch.identifier,
+            touch.clientX,
+            touch.clientY
         );
     }, { passive: false });
     window.addEventListener('touchmove', event => {
         if (!isPressing) {
             return;
         }
+        const touch = event.changedTouches[0];
         controller.move(
-            event.changedTouches[0].clientX,
-            event.changedTouches[0].clientY
+            touch.identifier,
+            touch.clientX,
+            touch.clientY
         );
     });
     window.addEventListener('touchend', event => {
@@ -138,9 +148,11 @@ if (isTouchScreen) {
             return;
         }
         isPressing = false;
+        const touch = event.changedTouches[0];
         controller.stop(
-            event.changedTouches[0].clientX,
-            event.changedTouches[0].clientY
+            touch.identifier,
+            touch.clientX,
+            touch.clientY
         );
     });
 } else {
@@ -151,6 +163,7 @@ if (isTouchScreen) {
         event.preventDefault();
         isPressing = true;
         controller.start(
+            event.button,
             event.clientX,
             event.clientY
         );
@@ -160,6 +173,7 @@ if (isTouchScreen) {
             return;
         }
         controller.move(
+            event.button,
             event.clientX,
             event.clientY
         );
@@ -170,6 +184,7 @@ if (isTouchScreen) {
         }
         isPressing = false;
         controller.stop(
+            event.button,
             event.clientX,
             event.clientY
         );
