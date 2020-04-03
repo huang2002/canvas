@@ -125,35 +125,41 @@ if (isTouchScreen) {
         }
         event.preventDefault();
         isPressing = true;
-        const touch = event.changedTouches[0];
-        controller.start(
-            touch.identifier,
-            touch.clientX,
-            touch.clientY
-        );
+        const touches = event.changedTouches;
+        for (let i = 0; i < touches.length; i++) {
+            controller.start(
+                touches[i].identifier,
+                touches[i].clientX,
+                touches[i].clientY
+            );
+        }
     }, { passive: false });
     window.addEventListener('touchmove', event => {
         if (!isPressing) {
             return;
         }
-        const touch = event.changedTouches[0];
-        controller.move(
-            touch.identifier,
-            touch.clientX,
-            touch.clientY
-        );
+        const touches = event.changedTouches;
+        for (let i = 0; i < touches.length; i++) {
+            controller.move(
+                touches[i].identifier,
+                touches[i].clientX,
+                touches[i].clientY
+            );
+        }
     });
     window.addEventListener('touchend', event => {
         if (!isPressing) {
             return;
         }
         isPressing = false;
-        const touch = event.changedTouches[0];
-        controller.stop(
-            touch.identifier,
-            touch.clientX,
-            touch.clientY
-        );
+        const touches = event.changedTouches;
+        for (let i = 0; i < touches.length; i++) {
+            controller.stop(
+                touches[i].identifier,
+                touches[i].clientX,
+                touches[i].clientY
+            );
+        }
     });
 } else {
     window.addEventListener('mousedown', event => {
