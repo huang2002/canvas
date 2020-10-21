@@ -113,10 +113,11 @@ export const setController = key => {
     controller = controllers[key];
 };
 
+let isPressing = false;
+
+/*
 const isTouchScreen = navigator.maxTouchPoints
     || /ios|iphone|ipad/i.test(navigator.userAgent);
-
-let isPressing = false;
 
 if (isTouchScreen) {
     window.addEventListener('touchstart', event => {
@@ -204,3 +205,51 @@ if (isTouchScreen) {
         }
     });
 }
+*/
+window.addEventListener('pointerdown', event => {
+    if (event.target !== canvas) {
+        return;
+    }
+    event.preventDefault();
+    isPressing = true;
+    controller.start(
+        event.pointerId,
+        event.clientX,
+        event.clientY
+    );
+}, { passive: false });
+
+window.addEventListener('pointermove', event => {
+    console.log(event)
+    if (!isPressing) {
+        return;
+    }
+    event.preventDefault();
+    controller.move(
+        event.pointerId,
+        event.clientX,
+        event.clientY
+    );
+}, { passive: false });
+
+window.addEventListener('pointerup', event => {
+    console.log('stop')
+    if (!isPressing) {
+        return;
+    }
+    isPressing = false;
+    controller.stop(
+        event.pointerId,
+        event.clientX,
+        event.clientY
+    );
+});
+
+window.addEventListener('hashchange', () => {
+    const key = location.hash.slice(1);
+    if (controllers[key]) {
+        controller = controllers[key];
+    } else {
+        controller = defaultController;
+    }
+});
