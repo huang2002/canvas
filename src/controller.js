@@ -104,7 +104,14 @@ const controllers = {
 };
 
 const defaultController = controllers.pen;
-let controller = controllers[location.hash.slice(1)] || defaultController;
+let controller;
+const initController = controllers[location.hash.slice(1)];
+if (controllers[initController]) {
+    controller = controllers[initController];
+} else {
+    controller = defaultController;
+    location.hash = '#pen';
+}
 
 /**
  * @param {string} key
