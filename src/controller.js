@@ -3,8 +3,8 @@ import { canvas, history, context, applyLineStyle, clearTrash } from './canvas.j
 
 export const states = {
     foreground: '#000000',
-    background: '#99FFAA',
-    penWidth: 4,
+    background: '#FFFFFF',
+    penWidth: 3,
     rubberWidth: 16,
 };
 
@@ -115,97 +115,6 @@ export const setController = key => {
 
 let isPressing = false;
 
-/*
-const isTouchScreen = navigator.maxTouchPoints
-    || /ios|iphone|ipad/i.test(navigator.userAgent);
-
-if (isTouchScreen) {
-    window.addEventListener('touchstart', event => {
-        if (event.target !== canvas) {
-            return;
-        }
-        event.preventDefault();
-        isPressing = true;
-        const touches = event.changedTouches;
-        for (let i = 0; i < touches.length; i++) {
-            controller.start(
-                touches[i].identifier,
-                touches[i].clientX,
-                touches[i].clientY
-            );
-        }
-    }, { passive: false });
-    window.addEventListener('touchmove', event => {
-        if (!isPressing) {
-            return;
-        }
-        const touches = event.changedTouches;
-        for (let i = 0; i < touches.length; i++) {
-            controller.move(
-                touches[i].identifier,
-                touches[i].clientX,
-                touches[i].clientY
-            );
-        }
-    });
-    window.addEventListener('touchend', event => {
-        if (!isPressing) {
-            return;
-        }
-        isPressing = false;
-        const touches = event.changedTouches;
-        for (let i = 0; i < touches.length; i++) {
-            controller.stop(
-                touches[i].identifier,
-                touches[i].clientX,
-                touches[i].clientY
-            );
-        }
-    });
-} else {
-    window.addEventListener('mousedown', event => {
-        if (event.target !== canvas) {
-            return;
-        }
-        event.preventDefault();
-        isPressing = true;
-        controller.start(
-            event.button,
-            event.clientX,
-            event.clientY
-        );
-    }, { passive: false });
-    window.addEventListener('mousemove', event => {
-        if (!isPressing) {
-            return;
-        }
-        controller.move(
-            event.button,
-            event.clientX,
-            event.clientY
-        );
-    });
-    window.addEventListener('mouseup', event => {
-        if (!isPressing) {
-            return;
-        }
-        isPressing = false;
-        controller.stop(
-            event.button,
-            event.clientX,
-            event.clientY
-        );
-    });
-    window.addEventListener('hashchange', () => {
-        const key = location.hash.slice(1);
-        if (controllers[key]) {
-            controller = controllers[key];
-        } else {
-            controller = defaultController;
-        }
-    });
-}
-*/
 window.addEventListener('pointerdown', event => {
     if (event.target !== canvas) {
         return;
@@ -220,7 +129,6 @@ window.addEventListener('pointerdown', event => {
 }, { passive: false });
 
 window.addEventListener('pointermove', event => {
-    console.log(event)
     if (!isPressing) {
         return;
     }
@@ -233,7 +141,6 @@ window.addEventListener('pointermove', event => {
 }, { passive: false });
 
 window.addEventListener('pointerup', event => {
-    console.log('stop')
     if (!isPressing) {
         return;
     }
