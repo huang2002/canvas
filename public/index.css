@@ -14,7 +14,7 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    color: #DDD;
+    color: #CCC;
     font-size: 16px;
     overflow: hidden;
 }
@@ -64,12 +64,12 @@ body {
 }
 
 .hotkey::first-letter {
-    text-decoration: underline #CCC;
+    text-decoration: underline currentColor;
 }
 
 .controller-button {
     display: inline-block;
-    color: #CCC;
+    color: #AAA;
 }
 
 .controller-button:target {
